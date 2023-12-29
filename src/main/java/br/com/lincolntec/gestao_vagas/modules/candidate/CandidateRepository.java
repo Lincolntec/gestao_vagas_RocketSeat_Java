@@ -1,4 +1,4 @@
-package br.com.lincolntec.gestao_vagas.candidate;
+package br.com.lincolntec.gestao_vagas.modules.candidate;
 
 
 import java.util.Optional;

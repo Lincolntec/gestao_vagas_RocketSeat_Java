@@ -1,11 +1,11 @@
-package br.com.lincolntec.gestao_vagas.candidate.useCase;
+package br.com.lincolntec.gestao_vagas.modules.candidate.useCase;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.lincolntec.gestao_vagas.candidate.CandidateEntity;
-import br.com.lincolntec.gestao_vagas.candidate.CandidateRepository;
 import br.com.lincolntec.gestao_vagas.exceptions.UserFoundException;
+import br.com.lincolntec.gestao_vagas.modules.candidate.CandidateEntity;
+import br.com.lincolntec.gestao_vagas.modules.candidate.CandidateRepository;
 
 @Service
 public class CreateCandidateUseCase {
