@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,8 +28,14 @@ public class JobEntity {
     @Id
     @GeneratedValue( strategy = GenerationType.UUID)
     private UUID id;
+
+    @Schema( example = "Vaga para design")
     private String description;
+
+    @Schema( example = "GYMPASS, Plano de saúde")
     private String benefits;
+
+    @Schema( example = "SENIOR")
     private String level;
 
     @ManyToOne()
