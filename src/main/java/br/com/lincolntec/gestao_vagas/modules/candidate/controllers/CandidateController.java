@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.lincolntec.gestao_vagas.modules.candidate.CandidateEntity;
 import br.com.lincolntec.gestao_vagas.modules.candidate.dto.ProfileCandidateResponseDTO;
+import br.com.lincolntec.gestao_vagas.modules.candidate.useCase.ApplyJobCandidateUseCase;
 import br.com.lincolntec.gestao_vagas.modules.candidate.useCase.CreateCandidateUseCase;
 import br.com.lincolntec.gestao_vagas.modules.candidate.useCase.ListAllJobsByFilterUseCase;
 import br.com.lincolntec.gestao_vagas.modules.candidate.useCase.ProfileCandidateUseCase;
@@ -38,6 +40,9 @@ public class CandidateController {
 
    @Autowired
    private CreateCandidateUseCase candidateUseCase;
+
+   @Autowired
+   private ApplyJobCandidateUseCase applyJobCandidateUseCase;
 
    @Autowired
    private ListAllJobsByFilterUseCase listAllJobsByFilterUseCase;
@@ -110,5 +115,25 @@ public class CandidateController {
     }
 
 
+    @PostMapping("/job/apply")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    @Operation(summary = "Inscrição do candidato para uma vaga",
+     description = "Esta função é responsável por realizar a inscrição do candidato em uma vaga." )
+     @SecurityRequirement(name = "jwt_auth")
+    public ResponseEntity<Object> applyJob(HttpServletRequest request, @RequestBody UUID idJob) {
+
+        var idCandidate = request.getAttribute("candidate_id");
+
+        try {
+            var result = this.applyJobCandidateUseCase.execute(UUID.fromString(idCandidate.toString()), idJob);            
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+            
+        }
+        
+
+
+    }
     
 }
