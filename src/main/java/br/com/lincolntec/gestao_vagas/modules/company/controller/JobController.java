@@ -1,8 +1,10 @@
 package br.com.lincolntec.gestao_vagas.modules.company.controller;
 
+import java.net.URI;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,16 +41,27 @@ public class JobController {
             )
         })
     })
-    public JobEntity create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request){
+    public ResponseEntity<Object> create(@Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request){
         var companyID = request.getAttribute("company_id");
+
+        try {
 
         var jobEntity = JobEntity.builder().benefits(createJobDTO.getBenefits())
         .description(createJobDTO.getBenefits())
         .companyId(UUID.fromString(companyID.toString()))
         .level(createJobDTO.getLevel())
         .build();
-       
-        return this.createJobUseCase.execute(jobEntity);
+
+        var result = this.createJobUseCase.execute(jobEntity);
+        URI uri = new URI("/company/job/") ;
+        return ResponseEntity.created(uri).body(result);
+                   
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+           
+        }
+
+        
     }
     
 }
