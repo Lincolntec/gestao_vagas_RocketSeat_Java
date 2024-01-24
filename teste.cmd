@@ -1,0 +1,1 @@
+mvn clean verify sonar:sonar -Dsonar.projectKey=gestao_vagas_RocketSeat_Java -Dsonar.host.url=http://localhost:9000 -Dsonar.login=sqp_831719cab4d9016d05ebcb956c4f3fecb68173e9
