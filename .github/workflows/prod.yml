@@ -30,7 +30,7 @@ jobs:
             - name: Pull image docker hub
               run: sudo docker pull lincolin7/gestao_vagas:latest
             - name: remove container
-              run: docker rm -f gestao_vagas 
+              run: sudo docker rm -f gestao_vagas 
             - name: Run docker container gestao_vagas  
               run: sudo docker run -d -p 8080:8080 -e DATABASE_URL=${{secrets.DATABASE_URL}} -e DATABASE_PASSWORD=${{secrets.DATABASE_PASSWORD}} -e DATABASE_USERNAME=${{secrets.DATABASE_USERNAME}} --name gestao_vagas lincolin7/gestao_vagas
        
